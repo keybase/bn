@@ -1,0 +1,18 @@
+{
+  "name": "bn",
+  "version": "0.0.0",
+  "description": "JS Bigint import",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/keybase/bn"
+  },
+  "author": "Thomas Wu",
+  "license": "none",
+  "bugs": {
+    "url": "https://github.com/keybase/bn/issues"
+  }
+}
