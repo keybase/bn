@@ -1,9 +1,11 @@
 
 var engine = require('./lib/wrap').engine;
 if (!engine) {
-	engine = require("./lib/pure");
-};
+	syms = require("./lib/pure");
+} else {
+	syms = require("./lib/fast");
+}
 
-for (var k in engine) {
-	exports[k] = engine[k];	
+for (var k in syms) {
+	exports[k] = syms[k];	
 }
