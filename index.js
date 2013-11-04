@@ -1,10 +1,6 @@
 
-var engine = null;
-try {
-	var mod = "big" + "int";
-	var backend = require(mod);
-	engine = require("./lib/fast");
-} catch (e) {
+var engine = require('./lib/wrap').engine;
+if (!engine) {
 	engine = require("./lib/pure");
 };
 
