@@ -155,7 +155,7 @@ function bnpFromString(s,b,unsigned) {
   else if(b == 2) k = 1;
   else if(b == 32) k = 5;
   else if(b == 4) k = 2;
-  else { this.fromRadix(s,b); return; }
+  else { this.fromRadix(s,b); return this; }
   this.t = 0;
   this.s = 0;
   var i = s.length, mi = false, sh = 0;
@@ -183,6 +183,7 @@ function bnpFromString(s,b,unsigned) {
   }
   this.clamp();
   if(mi) BigInteger.ZERO.subTo(this,this);
+  return this;
 }
 
 // (protected) clamp off excess high words

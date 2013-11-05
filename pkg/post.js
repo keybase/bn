@@ -1,5 +1,5 @@
 
-function buffer_to_ui8a (buffer) {
+function buffer_to_ui8a (b) {
 	var l = b.length;
 	var ret = new Uint8Array(l);
 	for (var i = 0; i < l; i++) {
@@ -13,10 +13,13 @@ function buffer_to_ui8a (buffer) {
 BigInteger.prototype.fromBuffer = function (buf) {
     // the last 'true' is for 'unsigned', our hack to jsbn.js to 
     // workaround the bugginess of their sign bit manipulation.
-	nbi().fromString(buffer_to_ui8a(buf), 256, true);
+	this.fromString(buffer_to_ui8a(buf), 256, true);
 	return this;
 };
 
+BigInteger.random_nbit = function (nbits, rf) {
+	return new BigInteger(nbits, rf);
+};
 
 module.exports = { 
 	BigInteger : BigInteger,
