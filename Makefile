@@ -4,7 +4,7 @@ OUT=lib/pure.js
 
 all: $(OUT) $(BROWSER)
 
-$(OUT):
+$(OUT): pkg/pre.js jsbn/*.js pkg/post.js
 	echo "(function (){ " > $(OUT)
 	cat pkg/pre.js | awk ' { print "\t", $$0 } ' >> $(OUT)
 	find jsbn/ -type f -name '*.js' | sort | xargs cat | awk '{ print "\t", $$0 }' >> $(OUT)
