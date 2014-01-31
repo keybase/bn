@@ -1,5 +1,5 @@
 {
-  "name": "keybase-bn",
+  "name": "bn",
   "version": "0.0.1",
   "description": "JS Bigint import",
   "main": "index.js",
