@@ -6,6 +6,8 @@ Features:
   - Get negative bignums working
   - Get toDER and fromDER working properly, in pure and fast
 
+TODO: incorporate tests from bigi
+
 ## 0.0.6 (2014-06-13)
 
 Features:
