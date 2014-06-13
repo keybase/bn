@@ -4,13 +4,13 @@
 Version: GnuPG/MacGPG2 v2.0.22 (Darwin)
 Comment: GPGTools - https://gpgtools.org
 
-iQEcBAABCgAGBQJTmwPQAAoJEJgKPw0B/gTfJR8IALNDDi8AQVjd9F6Ig98CAuuK
-XC5QHeGcVQJ569SSy0SftbdsTnmK7a5JmRESSJSzYQxgNp5UQ9IqSDuJpTdNPTBG
-9nkEp+4XojLJE2yPBDiPQGJSUwRWcWfc1ZWfOQUtDaVW96ao5UuJ6Vn8u+mdFOS2
-/0Mzjd/sEGJZdXSm7nW8Dd1OuBukHnEg/AETcaD7bI2bnKyDPhYtw9pmrhKV4sZM
-yS5gaoQl0iGtaIxZs8PK4W5aoDM2Pcc/zv2IdHxhd9dF2/Q0IemUEUklnx9NlHDg
-sQXduSKYbfeLQmOoTl63b+vltCq5o94/ICJIDGB1MiYJJV7e+hqKM42ORe42OMw=
-=fbrg
+iQEcBAABCgAGBQJTm1nhAAoJEJgKPw0B/gTfjwUIAKCjYpf6qrVGz6KEB3iV1FbB
+VvcmILTOvrt4CZ4muXZ23IGzUrHqhBNVf0eMtj7qTGa+tZy2OmqjXa++0eMPZxv7
+R1SJiqnm4QMXvUlxWov+tJVDabVV7KcjgQvVf4isBn1dhMRxwQZxBO84sTzf0FYg
+LcjWPw9vrtA5apNVhz4XLoVwTTju/QMYgISCLlqQ/+Pqrv+xR4UyNf0yif7PQXmy
+GNWhImn6YQHl4qYOn8ckbu4gYa8BvglGb8FnfkiHVO5DrjlYej/2sWR3KWZ23b/A
+2uM9W644JmgW/vO8G0MQJKICxfaZuT9HoOcjzXlL9/AfP1QGozDDrPe1Zz8KJ1w=
+=8S7O
 -----END PGP SIGNATURE-----
 
 ```
@@ -25,7 +25,7 @@ sQXduSKYbfeLQmOoTl63b+vltCq5o94/ICJIDGB1MiYJJV7e+hqKM42ORe42OMw=
 size   exec  file            contents                                                        
              ./                                                                              
 97             .gitignore    d11ca7319245e37c399ba3a881caf35ab073d95bf755351df4ec899077173ba3
-221            CHANGELOG.md  1fbcfbfd91e5ee037e63d40916e6dd2577a4771742f10c097efc71a3bd566d3a
+314            CHANGELOG.md  2a9f6bf692d83c0756a9f5481c9da53e00edd653ca8a10745f45e886e24ba0b4
 445            Makefile      3b14c6e3e64017982cc838025744e8d9afe04a4473dc092fa2092726acaffb82
 24             README.md     2c3ee7372f4dfd4c968ffd31f8d0cfef13128a355471a2bfaee22e746fc4cbc4
 181            index.js      874f53ed6ff13e2e19617a0ce9337a875b31144f0ec31d6ad84db077332bcfa6
@@ -33,13 +33,13 @@ size   exec  file            contents
 16330            jsbn.js     27867741662be83a640e90d848ad484300cd6a819032ab389ec529cca58d8d32
 20363            jsbn2.js    819d969384ec861b5adecbdc24946146fa09c0c34cfc07c9c258f6cf2520e298
                lib/                                                                          
-4097             fast.js     b12f79198a07cd2da2538f83ec375a9a3bae7c48801606a384e2e9d57fe9ce0c
-40234            pure.js     81835fd7f30afc788945c57af92ec49e91fdaa0e32d3b2113938d7b85c3224a9
+5513             fast.js     e381ee436b252e8eb06df1341d4efdb399d89deda62c628b237b1f4887367c0a
+40845            pure.js     d197fb3a293aef728deb1889033cd66c324f4f336f37cb012b969911ee231317
 173              wrap.js     5194e54d9a96da71bfe08ae4d418ae2b131bb3c23c2a80e0d981543b5b5c2cc2
-373            package.json  15f5f383bb2e5a290e8273f1640e344974027f6ff6c7fec156360ba5b5fa29c3
+373            package.json  6bc0d9d61d95eb45b1cd216a5375867e8f51fcebcb1d64500c03533011ebc99c
                pkg/                                                                          
-854              post.js     a31cf5bcc7a57930588b7181fe68f3ccf5df23eb3c1a8be925035b22f19d853d
-0                pre.js      e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+1408             post.js     89c105aaa3ee3d5b6873fd6f187c324f314ad2a0b4847e10c639c780a532cb88
+1                pre.js      01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
 ```
 
 #### Ignore
