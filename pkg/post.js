@@ -17,7 +17,7 @@ function buffer_to_ui8a (b) {
 // in node.  Typically we're doing it the other way around.
 BigInteger.prototype.fromBuffer = function (buf) {
     // the last 'true' is for 'unsigned', our hack to jsbn.js to 
-    // workaround the bugginess of their sign bit manipulation.
+    // shut off DER-integer interpretation
 	this.fromString(buffer_to_ui8a(buf), 256, true);
 	return this;
 };
@@ -57,6 +57,16 @@ BigInteger.prototype.toBuffer = function (size) {
 		ret = Buffer.concat([pad,ret]);
 	}
 	return ret;
+};
+
+BigInteger.prototype.toDERInteger = function () {
+	return new Buffer(this.toByteArray(true));
+};
+
+BigInteger.fromDERInteger = function (buf) {
+	var x = nbi();
+	x.fromString(buffer_to_ui8a(buf), 256, false);
+	return x;
 };
 
 module.exports = { 
