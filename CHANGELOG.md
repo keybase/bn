@@ -1,3 +1,9 @@
+## 0.0.6 (2014-06-13)
+
+Features:
+
+  - Various fixes to be compatible with the bigi package.
+
 ## 0.0.5 (2014-06-13)
 
 Features:
