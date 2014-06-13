@@ -1,3 +1,9 @@
+## 0.0.7
+
+Features:
+
+  - Pad parameter to toBuffer
+
 ## 0.0.6 (2014-06-13)
 
 Features:
