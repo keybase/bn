@@ -21,6 +21,10 @@ BigInteger.random_nbit = function (nbits, rf) {
 	return new BigInteger(nbits, rf);
 };
 
+BigInteger.prototype.inspect = function () {
+	return "<BigInteger/pure " + this.toString() + ">";
+};
+
 module.exports = { 
 	BigInteger : BigInteger,
 	nbi : nbi,
