@@ -25,6 +25,11 @@ BigInteger.prototype.inspect = function () {
 	return "<BigInteger/pure " + this.toString() + ">";
 };
 
+// For compatability with the 'bigi' package used by ecurve
+BigInteger.fromHex = function (s) {
+	return new BigInteger(s, 16);
+};
+
 module.exports = { 
 	BigInteger : BigInteger,
 	nbi : nbi,
