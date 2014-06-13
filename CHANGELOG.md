@@ -4,7 +4,7 @@ Features:
 
   - Pad parameter to toBuffer
   - Get negative bignums working
-  - Get toDER and fromDER working properly.
+  - Get toDER and fromDER working properly, in pure and fast
 
 ## 0.0.6 (2014-06-13)
 
