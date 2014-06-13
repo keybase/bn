@@ -1,6 +1,6 @@
 {
   "name": "bn",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "JS Bigint import",
   "main": "index.js",
   "scripts": {
