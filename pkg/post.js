@@ -38,6 +38,9 @@ BigInteger.prototype.inspect = function () {
 
 // For compatability with the 'bigi' package used by ecurve
 BigInteger.fromHex = function (s) {
+
+	if (!s.match(/^[a-fA-F0-9]*$/)) { throw new Error("hex string invalid: "+ s); }
+	if (s.length % 2 != 0) { throw new Error("got an odd-length hex-string"); }
 	return new BigInteger(s, 16);
 };
 
@@ -48,8 +51,9 @@ BigInteger.valueOf = function (x) {
 BigInteger.prototype.toBuffer = function (size) {
 	var x;
 	if (!size) { size = 0; }
-	if (this.signum() == 0) { x = []; }
-	else { x = this.toByteArray(); }
+	var s = this.signum();
+	if (s == 0) { x = []; }
+	else {x = this.toByteArray(s < 0); }
 	var ret = new Buffer(x);
 	if ((diff = size - x.length) > 0) {
 		var pad = new Buffer(diff);
@@ -67,6 +71,18 @@ BigInteger.fromDERInteger = function (buf) {
 	var x = nbi();
 	x.fromString(buffer_to_ui8a(buf), 256, false);
 	return x;
+};
+
+BigInteger.prototype.toByteArrayUnsigned = function () {
+	return new Uint8Array(this.toBuffer());
+};
+
+BigInteger.fromByteArrayUnsigned = function (b) {
+	return BigInteger.fromBuffer(new Buffer(b));
+};
+
+BigInteger.prototype.toHex = function (size) {
+	return this.toBuffer(size).toString('hex');
 };
 
 module.exports = { 
