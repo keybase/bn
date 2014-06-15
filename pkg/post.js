@@ -85,6 +85,73 @@ BigInteger.prototype.toHex = function (size) {
 	return this.toBuffer(size).toString('hex');
 };
 
+BigInteger.prototype.square2to = function (r) {
+	var x = this.abs();
+
+	var i = x.t*2;
+	r.t = i;
+
+	var u = new Uint32Array(x.t << 1);      // Input array in base 2^14
+	var v = new Uint32Array(u.length << 1); // Output array in base 2^14
+
+	// Extract to base14.
+	var j = 0;
+	for (i = 0; i < x.t; i++) {
+		u[j++] = (x[i] & 0x3fff);
+		u[j++] = (x[i] >> 14);
+	}
+	console.log(u);
+
+	var c = 0; // the carry field
+	var k = 0;
+	for (i = 0; i < v.length - 1; i++) {
+		var min_j;
+		var max_j;
+		if (i < u.length) {
+			min_j = 0;
+			max_j = i;
+		} else {
+			max_j = u.length - 1;
+			min_j = (i - u.length + 1);
+		}
+
+		console.log("@ i -> " + i + " " + min_j + " " + max_j);
+		var tot = c;
+		for (j = min_j; j <= max_j; j++) {
+			console.log("@ j -> " + j);
+			var k = (i - j);
+			if (j <= k) {
+				console.log("@ k -> " + k);
+				var y = u[k] * u[j];
+				// It gets counted twice for cross-products, and once for 
+				// square terms.
+				if (k != j) { y = y << 1; }
+				console.log("y -> " + y);
+				tot += y;
+			}
+		}
+		v[i] = (tot & 0x3fff); 
+		c = (tot >> 14);
+		console.log(v[i] + " & " + c);
+	}
+	v[v.length - 1] = c;
+	console.log(v);
+
+	r.s = 0;
+	j = 0;
+	for (i = 0; i < v.length; i+= 2) {
+		r[j++] = (v[i] | (v[i+1] << 14));
+	}
+	r.t = j;
+	r.clamp();
+};
+
+BigInteger.prototype.square2 = function () {
+	var r = nbi();
+	this.square2to(r);	
+	return r;
+};
+
 module.exports = { 
 	BigInteger : BigInteger,
 	nbi : nbi,
