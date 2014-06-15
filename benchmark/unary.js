@@ -2,7 +2,7 @@ var assert = require('assert')
 var benchmark = require('benchmark')
 benchmark.options.minTime = 1
 
-var LocalBi = require('..')
+var LocalBi = require('..').BigInteger
 var NpmBi = require('bigi')
 
 var fixtures = require('./fixtures/ops')
