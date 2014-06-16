@@ -1,12 +1,14 @@
-## 0.0.7
+## 1.0.0 (2014-06-16)
 
 Features:
 
   - Pad parameter to toBuffer
   - Get negative bignums working
   - Get toDER and fromDER working properly, in pure and fast
+  - Incorporated tests from bn.js and bigi
+  - Get benchmarks running too.
+  - Add .byteLength() calls to both
 
-TODO: incorporate tests from bigi
 
 ## 0.0.6 (2014-06-13)
 
