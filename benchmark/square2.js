@@ -15,6 +15,9 @@ fixtures.forEach(function (f) {
 	suite.add("square2(" + x.toString() + ")", function () {
 		var actual = x.square2();
 	});
+	suite.add("square1(" + x.toString() + ")", function () {
+		var actual = x.square();
+	});
 	suite.add("x.mult(" + x.toString() + ")", function () {
 		var actual = x.multiply(x);
 	});

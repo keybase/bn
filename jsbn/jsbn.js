@@ -439,7 +439,7 @@ function cConvert(x) {
 function cRevert(x) { return x; }
 function cReduce(x) { x.divRemTo(this.m,null,x); }
 function cMulTo(x,y,r) { x.multiplyTo(y,r); this.reduce(r); }
-function cSqrTo(x,r) { x.squareTo(r); this.reduce(r); }
+function cSqrTo(x,r) { x.square2to(r); this.reduce(r); }
 
 Classic.prototype.convert = cConvert;
 Classic.prototype.revert = cRevert;
@@ -519,7 +519,7 @@ function montReduce(x) {
 }
 
 // r = "x^2/R mod m"; x != r
-function montSqrTo(x,r) { x.squareTo(r); this.reduce(r); }
+function montSqrTo(x,r) { x.square2to(r); this.reduce(r); }
 
 // r = "xy/R mod m"; x,y != r
 function montMulTo(x,y,r) { x.multiplyTo(y,r); this.reduce(r); }

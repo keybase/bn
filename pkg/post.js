@@ -85,6 +85,8 @@ BigInteger.prototype.toHex = function (size) {
 	return this.toBuffer(size).toString('hex');
 };
 
+BigInteger.prototype.byteLength = function () { return this.t; }
+
 //-----------------------------------------------
 // 
 // A very minimal Uint16Array pool.  If we ask for array size n,
@@ -149,7 +151,7 @@ BigInteger.prototype.square2to = function (r) {
 	var min_j, max_j, tot;
 	var v_lim = v_len - 1;
 	var i_lim;
-	var sum8;
+	var sum8, sum16;
 	var k;
 
 	for (i = 0; i < v_lim; i++) {
@@ -212,7 +214,9 @@ BigInteger.prototype.square2to = function (r) {
 			j   += 8;
 		}
 
-		while (j < max_j - 4) {
+		// For only 4 iterations, we'll never reach the carry overflow condition.
+		// So it's safe to ignore the possibility.
+		if (j < max_j - 4) {
 			k = i - j;
 			tot += (((u[k  ]|0) * (u[j  ]|0)
 			    +    (u[k-1]|0) * (u[j+1]|0)
@@ -221,6 +225,8 @@ BigInteger.prototype.square2to = function (r) {
 			j += 4;
 		}
 
+		// The base loop (rolled up). Same logic as above for not having to worry
+		// about carry overflow...
 		for ( ; j < max_j; j++) {
 			tot += (((u[(i-j)]|0) * (u[j]|0)) << 1);
 		}
@@ -233,6 +239,7 @@ BigInteger.prototype.square2to = function (r) {
 		// Finally, split into a result and a carry term.
 		v[i] = (tot & 0x3fff); 
 		c += (tot >>> 14);
+		console.log("c -> " + c);
 	}
 
 	// Leave the carry in the top slot.
