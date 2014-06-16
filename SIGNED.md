@@ -4,13 +4,13 @@
 Version: GnuPG/MacGPG2 v2.0.22 (Darwin)
 Comment: GPGTools - https://gpgtools.org
 
-iQEcBAABCgAGBQJTnzT5AAoJEJgKPw0B/gTfcL0H/j9E2ZQ66q2m86z9L/mMW8l5
-Hig2aE4CXPYKf/KY5MUMuwaabBHLZyoyW9GzhVOeb/BTAeuSAb+fFOOB2LWPGxD1
-ZGJG+HYayT4WtymvQb+i+FTa8BJeci6lTvgNnyCuKWzrUFNktOyI9wUIwXeFBP0a
-5L4/UXELx/JKH3F2HBavk5+CpRNRCilDE59m/Ji1rJgr+FmfpRj7PD9gM5ChyBKH
-DUYCE+PrgLUnyoupV6tWd3PJDUK3J+CxAaddhc3xIZ5WLVVssdwlYSsV/HXbNZct
-OkLfty6CvpeLXqXVGfctHbekRE+HcQCfdDoVAUsW7NOwloT1QyxNAMlfkl7txNM=
-=spPw
+iQEcBAABCgAGBQJTn1EjAAoJEJgKPw0B/gTfapQH/jrn+F0sgIaq8HK6Niwd7+OM
+Di/UcG4msIChGxumC3chevv0fuWUowLlgkzLn7hS9HQeqsoViOMMVISGTd4bMmzV
+vuLppLH0wOrZsq5ySvrrH446iRfg11djMNK7d4QvVW/rJLzsy5NTl08GeK77Uj8J
+SB2UI5o3NCUX1xq8LqC4Gdwhpr86eM8d3OqBG2OPqDeKLHytWU6DRakxobbSnet6
+9U6150kDFEiiVAgmuDioaCalIF11qY3D0ywlCx0pzSugeOU4UrfiwtQXylKHbhCj
+46MzQ4n0nXYINsu3MpX8rPdklzPhDX69HT24IMhVYF1AayI1BPxFbPsXGR7um8g=
+=sxCX
 -----END PGP SIGNATURE-----
 
 ```
@@ -25,7 +25,7 @@ OkLfty6CvpeLXqXVGfctHbekRE+HcQCfdDoVAUsW7NOwloT1QyxNAMlfkl7txNM=
 size   exec  file              contents                                                        
              ./                                                                                
 97             .gitignore      d11ca7319245e37c399ba3a881caf35ab073d95bf755351df4ec899077173ba3
-585            CHANGELOG.md    17cf3de6066d9dda977a76f035aa8b1d126bbf064353915e7827ee764bc2800c
+675            CHANGELOG.md    78164f7a64bf51804735770341abef0b0ddeb643b29d3a657ff98cdfb61f2596
 462            Makefile        8c6a7f657416170fcc15e6582dfc99a44d779bb5b4005c74b0b53aa01fde8a3b
 24             README.md       2c3ee7372f4dfd4c968ffd31f8d0cfef13128a355471a2bfaee22e746fc4cbc4
                benchmark/                                                                      
@@ -40,12 +40,12 @@ size   exec  file              contents
 16443            jsbn.js       21383d94091e39fc0c640fe90198fc4be47ff3ce182e1a621903198e03190ccf
 20415            jsbn2.js      7de1144ee3c572495d0a51b73f912118ec1b75cee85daff04badda14fb080064
                lib/                                                                            
-8733             fast.js       47dee41b90fe8ac4dda5fd8b743dfadf5cad1d913d91d982fae015bcc7f3e280
-41995            pure.js       2dbb10a8ab3f28c3718d53dd19287a65ed2347bc6006f4f664065726725b53b3
+8897             fast.js       8023620f21edff588eed336ab4c08e179dc93e94fb5f66d99634af0426f13a19
+41967            pure.js       dd4a8eb5884bba0ba2fdd3fbdfb052d9e833cc4d93fa417acca908c1e21aa0a7
 173              wrap.js       5194e54d9a96da71bfe08ae4d418ae2b131bb3c23c2a80e0d981543b5b5c2cc2
-355            package.json    617a1e4d7f0d39e1b46f86a52358466693be532b4769db9fa61d787c8c51bbae
+406            package.json    9f55ee79fbbf1816dc90733c4fd37c80247051e5eb6b0925f04bd0f8f5c0a65f
                pkg/                                                                            
-2313             post.js       13fa40a044c233dbb3eeb671f4f736453e444b9d6d7fdf17aee8e7d23ef0c176
+2285             post.js       61108abc1a4096a5099033595e7df829d358e514779f376b7de40fd682519424
 1                pre.js        01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
                test/                                                                           
 9585             bigi.js       c9214a1174f9d6bfcc9be388b94ac054a39a49126b060e1c0cb0b1c7614b7b88
