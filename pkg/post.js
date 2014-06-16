@@ -63,6 +63,8 @@ BigInteger.prototype.toBuffer = function (size) {
 	return ret;
 };
 
+BigInteger.prototype.byteLength = function () { return this.t; }
+
 BigInteger.prototype.toDERInteger = function () {
 	return new Buffer(this.toByteArray(true));
 };
