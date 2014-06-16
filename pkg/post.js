@@ -109,13 +109,13 @@ BigInteger.prototype.square2to = function (r) {
 		u[j++] = (x[i] & 0x3fff);
 		u[j++] = (x[i] >> 14);
 	}
-	console.log(u);
 
 	var c = 0; // the carry field
 	var k = 0;
 	var min_j, max_j, tot;
 	var v_lim = v.length - 1;
 	var i_lim;
+	var sum8;
 
 	for (i = 0; i < v_lim; i++) {
 
@@ -152,45 +152,44 @@ BigInteger.prototype.square2to = function (r) {
 
 		// Initialize the total with the carry from the previous iteration
 		tot = c;
+		c = 0;
 		j = min_j;
 
-		/*
 		// Loop over all of the cross-terms (which are all doubled)
 		while ( j < max_j - 8) {
-			tot += ((((u[(i-j)]|0) * (u[j++]|0)) << 1)
-			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
-			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
-			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
-			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
-			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
-			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
-			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1));
+			sum8 = (u[i-j  ]|0) * (u[j  ]|0)
+			     + (u[i-j-1]|0) * (u[j+1]|0)
+			     + (u[i-j-2]|0) * (u[j+2]|0)
+			     + (u[i-j-3]|0) * (u[j+3]|0)
+			     + (u[i-j-4]|0) * (u[j+4]|0)
+			     + (u[i-j-5]|0) * (u[j+5]|0)
+			     + (u[i-j-6]|0) * (u[j+6]|0)
+			     + (u[i-j-7]|0) * (u[j+7]|0);
+			tot += ((sum8 & 0x1fff) << 1);
+			c   += (sum8 >>> 13);
+			j   += 8;
 		}
 
 		while (j < max_j - 4) {
-			tot += ((((u[(i-j)]|0) * (u[j++]|0)) << 1)
-			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
-			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
-			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1));
+			tot += (((u[i-j  ]|0) * (u[j  ]|0)
+			    +    (u[i-j-1]|0) * (u[j+1]|0)
+			    +    (u[i-j-2]|0) * (u[j+2]|0)
+			    +    (u[i-j-3]|0) * (u[j+3]|0)) << 1);
+			j += 4;
 		}
-		*/
-		console.log("at place " + i);
 
 		for ( ; j < max_j; j++) {
-			console.log("mul2 " + i + " " + j + "  (" + u[i-j] + "," + u[j] + ")");
 			tot += (((u[(i-j)]|0) * (u[j]|0)) << 1);
 		}
 
 		// Add the square terms (not-doubled). If applicable.
 		if (i === (j << 1)) {
-			console.log("mul1 " + i + " " + j + "  (" + u[i-j] + "," + u[j] + ")");
 			tot += (u[(i-j)]|0) * (u[j]|0);
 		}
 
 		// Finally, split into a result and a carry term.
 		v[i] = (tot & 0x3fff); 
-		c = (tot >>> 14);
-		console.log(" -> " + v[i] + "; " + c);
+		c += (tot >>> 14);
 	}
 
 	// Leave the carry.
