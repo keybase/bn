@@ -85,22 +85,56 @@ BigInteger.prototype.toHex = function (size) {
 	return this.toBuffer(size).toString('hex');
 };
 
-var u = null;
-var v = null;
+//-----------------------------------------------
+// 
+// A very minimal Uint16Array pool.  If we ask for array size n,
+// we get one of size m >= n.  If we find arrays smaller than that in the
+// pool, then we just discard them and redo it.
+//
+
+var __uint16array_pool = [];
+
+function get_uint16_array (l) {
+	var a;
+	while (__uint16array_pool.length) {
+		var a = __uint16array_pool.pop();
+		if (a.length >= l) {
+			return a;
+		}
+	}
+	return new Uint16Array(l);
+};
+
+function put_uint16_array(a) {
+	__uint16array_pool.push(a);
+};
+
+// end of array pool
+//-----------------------------------------------
+
 
 BigInteger.prototype.square2to = function (r) {
+
+	// We've hardcoded for 28-bit representation, out of laziness.
+	if (dbits != 28) {
+		return this.multiplyTo(this,r);	
+	}
+
 	var x = this.abs();
-	var y;
+	var i;
+  
+  	// Input array in base 2^14, twice as big as the input array
+  	var u_len = x.t << 1;
+	var u = get_uint16_array(u_len);
 
-	var i = x.t*2;
-	r.t = i;
+  	// Output array in base 2^14, twice as big as u
+  	var v_len = u_len << 1;
+	var v = get_uint16_array(v_len);
 
-	if (!u || u.length != (x.t << 1)) {
-		u = new Uint16Array(x.t << 1);      // Input array in base 2^14
-	}
-	if (!v || v.length != (u.length << 1)) {
-		v = new Uint16Array(u.length << 1); // Output array in base 2^14
-	}
+	// Note that below, we shouldn't use v.length or u.length, since we
+	// only know that u_len <= u.length, and v_len <= v.length, by our
+	// array pool construction.  This is easy to workaround as long as
+	// we know what is us.
 
 	// Extract to base14 array u.  We're going to be operating
 	// on this array.
@@ -113,25 +147,27 @@ BigInteger.prototype.square2to = function (r) {
 	var c = 0; // the carry field
 	var k = 0;
 	var min_j, max_j, tot;
-	var v_lim = v.length - 1;
+	var v_lim = v_len - 1;
 	var i_lim;
 	var sum8;
+	var k;
 
 	for (i = 0; i < v_lim; i++) {
 
 
 		// The name of the game is to loop with:
 		//
-		//  if (i < u.length) {
+		//  if (i < u_len) {
 		//    min_j = 0;
 		//	  max_j = i+1;
 		//  } else {
-		//    min_j = (i - u.length + 1);
-		//	  max_j = u.length
+		//    min_j = (i - u_len + 1);
+		//	  max_j = u_len
 		//  }
 		//
 		//  And while j < (i-j), since we're going to double.
-		//  for the other symmetric side.
+		//  for the other symmetric side. This is of course the
+		//  primary optimization of this squaring routine.
 		//  
 		//  We can rewrite j<(i-j) as j<i/2, so in the max_j
 		//  in both branches, we take the MIN of max_j and i/2.
@@ -141,12 +177,12 @@ BigInteger.prototype.square2to = function (r) {
 		ceil_i_over_2 = (i >> 1);
 		if ((i & 1) != 0) { ceil_i_over_2++; }
 
-		if (i < u.length) {
+		if (i < u_len) {
 			min_j = 0;
 			max_j = ceil_i_over_2; 
 		} else {
-			min_j = (i - u.length + 1);
-			max_j = u.length;
+			min_j = (i - u_len + 1);
+			max_j = u_len;
 			if (max_j > ceil_i_over_2) { max_j = ceil_i_over_2; }
 		}
 
@@ -157,24 +193,31 @@ BigInteger.prototype.square2to = function (r) {
 
 		// Loop over all of the cross-terms (which are all doubled)
 		while ( j < max_j - 8) {
-			sum8 = (u[i-j  ]|0) * (u[j  ]|0)
-			     + (u[i-j-1]|0) * (u[j+1]|0)
-			     + (u[i-j-2]|0) * (u[j+2]|0)
-			     + (u[i-j-3]|0) * (u[j+3]|0)
-			     + (u[i-j-4]|0) * (u[j+4]|0)
-			     + (u[i-j-5]|0) * (u[j+5]|0)
-			     + (u[i-j-6]|0) * (u[j+6]|0)
-			     + (u[i-j-7]|0) * (u[j+7]|0);
+			k = i - j;
+			sum8 = (u[k  ]|0) * (u[j  ]|0)
+			     + (u[k-1]|0) * (u[j+1]|0)
+			     + (u[k-2]|0) * (u[j+2]|0)
+			     + (u[k-3]|0) * (u[j+3]|0)
+			     + (u[k-4]|0) * (u[j+4]|0)
+			     + (u[k-5]|0) * (u[j+5]|0)
+			     + (u[k-6]|0) * (u[j+6]|0)
+			     + (u[k-7]|0) * (u[j+7]|0);
+
+		    // This is cute hack to avoid the (<< 1) that we typically do
+		    // for all of the cross terms. In the tot case, we do it normally
+		    // (but mask off 0x1fff rather than 0x3fff bits).  In the 'c' case
+		    // we shift over 13 rather than 14 bits.
 			tot += ((sum8 & 0x1fff) << 1);
 			c   += (sum8 >>> 13);
 			j   += 8;
 		}
 
 		while (j < max_j - 4) {
-			tot += (((u[i-j  ]|0) * (u[j  ]|0)
-			    +    (u[i-j-1]|0) * (u[j+1]|0)
-			    +    (u[i-j-2]|0) * (u[j+2]|0)
-			    +    (u[i-j-3]|0) * (u[j+3]|0)) << 1);
+			k = i - j;
+			tot += (((u[k  ]|0) * (u[j  ]|0)
+			    +    (u[k-1]|0) * (u[j+1]|0)
+			    +    (u[k-2]|0) * (u[j+2]|0)
+			    +    (u[k-3]|0) * (u[j+3]|0)) << 1);
 			j += 4;
 		}
 
@@ -192,15 +235,19 @@ BigInteger.prototype.square2to = function (r) {
 		c += (tot >>> 14);
 	}
 
-	// Leave the carry.
-	v[v.length - 1] = c;
+	// Leave the carry in the top slot.
+	v[v_len - 1] = c;
 
 	// Copy from the base-2^14 v back into the result r
 	r.s = 0;
 	j = 0;
-	for (i = 0; i < v.length; i+= 2) {
+	for (i = 0; i < v_len; i+= 2) {
 		r[j++] = (v[i] | (v[i+1] << 14));
 	}
+
+	// Put these back so we can use them next time.
+	put_uint16_array(u);
+	put_uint16_array(v);
 
 	r.t = j;
 	r.clamp();
