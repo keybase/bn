@@ -153,7 +153,25 @@ BigInteger.prototype.square2to = function (r) {
 		tot = c;
 
 		// Loop over all of the cross-terms (which are all doubled)
-		for (j = min_j; j < max_j; j++) {
+		for (j = min_j; j < max_j - 8; ) {
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+		}
+
+		while (j < max_j - 4) {
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+		}
+
+		for ( ; j < max_j; j++) {
 			tot += (((u[(i-j)]|0) * (u[j]|0)) << 1);
 		}
 
@@ -166,7 +184,7 @@ BigInteger.prototype.square2to = function (r) {
 		v[i] = (tot & 0x3fff); 
 		c = (tot >> 14);
 	}
-	
+
 	// Leave the carry.
 	v[v.length - 1] = c;
 
