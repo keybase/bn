@@ -96,10 +96,10 @@ BigInteger.prototype.square2to = function (r) {
 	r.t = i;
 
 	if (!u || u.length != (x.t << 1)) {
-		u = new Uint32Array(x.t << 1);      // Input array in base 2^14
+		u = new Uint16Array(x.t << 1);      // Input array in base 2^14
 	}
 	if (!v || v.length != (u.length << 1)) {
-		v = new Uint32Array(u.length << 1); // Output array in base 2^14
+		v = new Uint16Array(u.length << 1); // Output array in base 2^14
 	}
 
 	// Extract to base14 array u.  We're going to be operating
@@ -109,6 +109,7 @@ BigInteger.prototype.square2to = function (r) {
 		u[j++] = (x[i] & 0x3fff);
 		u[j++] = (x[i] >> 14);
 	}
+	console.log(u);
 
 	var c = 0; // the carry field
 	var k = 0;
@@ -151,38 +152,45 @@ BigInteger.prototype.square2to = function (r) {
 
 		// Initialize the total with the carry from the previous iteration
 		tot = c;
+		j = min_j;
 
+		/*
 		// Loop over all of the cross-terms (which are all doubled)
-		for (j = min_j; j < max_j - 8; ) {
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+		while ( j < max_j - 8) {
+			tot += ((((u[(i-j)]|0) * (u[j++]|0)) << 1)
+			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
+			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
+			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
+			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
+			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
+			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
+			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1));
 		}
 
 		while (j < max_j - 4) {
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
-			tot += (((u[(i-j)]|0) * (u[j++]|0)) << 1);
+			tot += ((((u[(i-j)]|0) * (u[j++]|0)) << 1)
+			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
+			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1)
+			    +   (((u[(i-j)]|0) * (u[j++]|0)) << 1));
 		}
+		*/
+		console.log("at place " + i);
 
 		for ( ; j < max_j; j++) {
+			console.log("mul2 " + i + " " + j + "  (" + u[i-j] + "," + u[j] + ")");
 			tot += (((u[(i-j)]|0) * (u[j]|0)) << 1);
 		}
 
 		// Add the square terms (not-doubled). If applicable.
 		if (i === (j << 1)) {
+			console.log("mul1 " + i + " " + j + "  (" + u[i-j] + "," + u[j] + ")");
 			tot += (u[(i-j)]|0) * (u[j]|0);
 		}
 
 		// Finally, split into a result and a carry term.
 		v[i] = (tot & 0x3fff); 
-		c = (tot >> 14);
+		c = (tot >>> 14);
+		console.log(" -> " + v[i] + "; " + c);
 	}
 
 	// Leave the carry.
