@@ -11,6 +11,9 @@ $(OUT): pkg/pre.js jsbn/*.js pkg/post.js
 	cat pkg/post.js | awk ' { print "\t", $$0 } ' >> $(OUT)
 	echo "})(this);" >> $(OUT)
 
+test: 
+	npm test
+
 build: $(OUT)
 
 clean:
