@@ -1,3 +1,9 @@
+## 1.0.1 (2014-06-16)
+
+Bugfixes:
+
+  - toDERInteger returns a byteArray, and not a buffer
+
 ## 1.0.0 (2014-06-16)
 
 Features:
