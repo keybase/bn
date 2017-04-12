@@ -2,6 +2,7 @@
   "name": "bn",
   "version": "1.0.1",
   "description": "JS Bigint import",
+  "license": "BSD-3-Clause",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha"
