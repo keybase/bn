@@ -10,7 +10,7 @@ describe('Convert', function() {
   describe('fromByteArrayUnsigned', function() {
     it('should match the test vectors', function() {
       fixtures.valid.forEach(function(f) {
-        var byteArray = Array.prototype.slice.call(new Buffer(f.hex, 'hex'))
+        var byteArray = Array.prototype.slice.call(Buffer.from(f.hex, 'hex'))
 
         assert.equal(BigInteger.fromByteArrayUnsigned(byteArray).toString(), f.decp)
       })
@@ -20,8 +20,8 @@ describe('Convert', function() {
   describe('fromBuffer', function() {
     it('should match the test vectors', function() {
       fixtures.valid.forEach(function(f) {
-        var buffer = new Buffer(f.hex, 'hex')
-        var bufferPadded = new Buffer(f.hexPadded, 'hex')
+        var buffer = Buffer.from(f.hex, 'hex')
+        var bufferPadded = Buffer.from(f.hexPadded, 'hex')
 
         assert.equal(BigInteger.fromBuffer(buffer).toString(), f.decp)
         assert.equal(BigInteger.fromBuffer(bufferPadded).toString(), f.decp)
@@ -50,7 +50,7 @@ describe('Convert', function() {
     it('should match the test vectors', function() {
       fixtures.valid.forEach(function(f) {
         var byteArray = BigInteger.fromHex(f.hex).toByteArrayUnsigned()
-        var hex = new Buffer(byteArray).toString('hex')
+        var hex = Buffer.from(byteArray).toString('hex')
 
         assert.equal(hex, f.hex)
       })
@@ -70,7 +70,7 @@ describe('Convert', function() {
   describe('fromDERInteger', function() {
     it('should match the test vectors', function() {
       fixtures.valid.forEach(function(f) {
-        var bi = BigInteger.fromDERInteger(new Buffer(f.DER, 'hex'))
+        var bi = BigInteger.fromDERInteger(Buffer.from(f.DER, 'hex'))
 
         assert.equal(bi.toString(), f.dec)
       })
@@ -81,7 +81,7 @@ describe('Convert', function() {
     it('should match the test vectors', function() {
       fixtures.valid.forEach(function(f) {
         var bi = new BigInteger(f.dec)
-        var ba = new Buffer(bi.toDERInteger())
+        var ba = Buffer.from(bi.toDERInteger())
 
         assert.equal(ba.toString('hex'), f.DER)
       })

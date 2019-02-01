@@ -54,9 +54,9 @@ BigInteger.prototype.toBuffer = function (size) {
 	var s = this.signum();
 	if (s == 0) { x = []; }
 	else {x = this.toByteArray(s < 0); }
-	var ret = new Buffer(x);
+	var ret = Buffer.from(x);
 	if ((diff = size - x.length) > 0) {
-		var pad = new Buffer(diff);
+		var pad = Buffer.alloc(diff);
 		pad.fill(0);
 		ret = Buffer.concat([pad,ret]);
 	}
@@ -80,7 +80,7 @@ BigInteger.prototype.toByteArrayUnsigned = function () {
 };
 
 BigInteger.fromByteArrayUnsigned = function (b) {
-	return BigInteger.fromBuffer(new Buffer(b));
+	return BigInteger.fromBuffer(Buffer.from(b));
 };
 
 BigInteger.prototype.toHex = function (size) {
