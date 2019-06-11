@@ -16,6 +16,6 @@
     "url": "https://github.com/keybase/bn/issues"
   },
   "devDependencies": {
-    "mocha": "^6.0.0"
+    "mocha": "^6.1.4"
   }
 }
