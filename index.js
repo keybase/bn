@@ -1,5 +1,6 @@
 
 var engine = require('./lib/wrap').engine;
+let syms;
 if (!engine) {
 	syms = require("./lib/pure");
 } else {
