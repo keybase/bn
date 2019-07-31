@@ -1,6 +1,6 @@
 {
   "name": "bn",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "JS Bigint import",
   "license": "BSD-3-Clause",
   "main": "index.js",
