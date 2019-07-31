@@ -1,3 +1,7 @@
+## 1.0.4 (2019-07-31)
+
+- Update deps to fix bad lodash
+
 ## 1.0.3 (2019-02-19)
 
 - Fix dev deps found via audit
