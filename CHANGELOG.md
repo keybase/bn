@@ -1,3 +1,7 @@
+## 1.0.5 (2019-09-24)
+
+- Fix bug for Webpack
+
 ## 1.0.4 (2019-07-31)
 
 - Update deps to fix bad lodash
